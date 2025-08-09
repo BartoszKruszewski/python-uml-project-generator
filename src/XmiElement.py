@@ -1,10 +1,16 @@
 from __future__ import annotations
 
-from typing import Literal, overload
+from typing import (
+    Literal,
+    overload
+)
 from xml.etree import ElementTree as ET
 
-from Config import Config
-from exceptions import NoAttribute, NoElement
+from src.Config import Config
+from src.exceptions import (
+    NoAttribute,
+    NoElement
+)
 
 
 class XmiElement():

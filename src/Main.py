@@ -1,7 +1,7 @@
 from pathlib import Path
 from pprint import pprint
 
-from XmiParser import XmiParser
+from src.XmiParser import XmiParser
 
 
 class Main:

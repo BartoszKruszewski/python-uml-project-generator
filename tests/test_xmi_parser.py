@@ -1,7 +1,17 @@
 from pathlib import Path
 
-from syntax import Class, DataType, Dependency, Operation, Package, Parameter, ParameterDirection, Project, Property
-from XmiParser import XmiParser
+from src.syntax import (
+    Class,
+    DataType,
+    Dependency,
+    Operation,
+    Package,
+    Parameter,
+    ParameterDirection,
+    Project,
+    Property
+)
+from src.XmiParser import XmiParser
 
 
 class TestXmiParser:

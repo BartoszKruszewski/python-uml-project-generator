@@ -1,10 +1,23 @@
 from pathlib import Path
-from typing import Callable, TypeVar
+from typing import (
+    Callable,
+    TypeVar
+)
 from xml.etree import ElementTree as ET
 
-from syntax import (AbstractSyntax, Class, DataType, Dependency, Operation, Package, Parameter, ParameterDirection,
-                    Project, Property)
-from XmiElement import XmiElement
+from src.syntax import (
+    AbstractSyntax,
+    Class,
+    DataType,
+    Dependency,
+    Operation,
+    Package,
+    Parameter,
+    ParameterDirection,
+    Project,
+    Property
+)
+from src.XmiElement import XmiElement
 
 
 class XmiParser:
