@@ -1,0 +1,3 @@
+- Architektura rozwiązania
+- Opis komponentów: biblioteka Python i aplikacja webowa
+- Diagramy klas i diagramy architektury

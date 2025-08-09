@@ -1,0 +1,3 @@
+- Cel i zakres pracy
+- Uzasadnienie wyboru tematu
+- Metodyka pracy

@@ -1,0 +1,4 @@
+- Technologie frontendowe (React)
+- Technologie backendowe (FastAPI)
+- Funkcjonalności aplikacji (interaktywny edytor UML, generowanie kodu)
+- Integracja frontend-backend

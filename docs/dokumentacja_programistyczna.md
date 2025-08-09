@@ -1,0 +1,3 @@
+- Wykaz i uzasadnienie narzędzi programistycznych
+- Opis struktury projektu (katalogi, pliki)
+- Przypadki użycia i testy

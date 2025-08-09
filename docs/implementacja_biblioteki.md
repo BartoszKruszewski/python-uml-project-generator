@@ -1,0 +1,4 @@
+- Wybór narzędzi i bibliotek (parser XMI itp.)
+- Struktura i moduły biblioteki
+- Mechanizm parsowania i generowania kodu
+- Przykłady działania biblioteki
