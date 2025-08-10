@@ -12,8 +12,6 @@ class TemplateManager:
 
 
 class {class_name}:
-{constructor}
-
 {methods}
 """
 
@@ -31,8 +29,11 @@ def {method_name}(self, {args}) -> {return_type}:
         return cls.class_body.strip().format(
             imports="imports",
             class_name=class_syntax.name,
-            constructor=cls._indent_block(cls._generate_constructor(class_syntax.properties), indent=4),
-            methods=cls._indent_block(cls._generate_methods(class_syntax.operations), indent=4)
+            methods=cls._indent_block(
+                (cls._generate_constructor(class_syntax.properties) + "\n\n" if class_syntax.properties else "")
+                + cls._generate_methods(class_syntax.operations),
+                indent=4
+            )
         ) + "\n"
 
     @classmethod
@@ -52,10 +53,10 @@ def {method_name}(self, {args}) -> {return_type}:
                     for parameter in operation.parameters
                     if parameter.direction == ParameterDirection.IN
                 ),
-                return_type=next(
+                return_type=return_types[0] if (return_types := [
                     parameter.type for parameter in operation.parameters
                     if parameter.direction == ParameterDirection.RETURN
-                )
+                ]) else "None"
             )
             for operation in operations
         )

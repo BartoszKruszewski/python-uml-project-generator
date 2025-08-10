@@ -1,116 +1,11 @@
 from pathlib import Path
 
-from src.syntax import (
-    Class,
-    DataType,
-    Dependency,
-    Operation,
-    Package,
-    Parameter,
-    ParameterDirection,
-    Project,
-    Property
-)
 from src.XmiParser import XmiParser
+from tests.data.example_syntax import example_syntax
 
 
 class TestXmiParser:
     test_xmi_path = Path(__file__).parent / "data" / "test.xmi"
-    expected = Project(
-        id='model_1',
-        name='Sample Project',
-        packages=[
-            Package(
-                id='core_module',
-                name='Core',
-                classes=[
-                    Class(
-                        id='ExampleService',
-                        name='ExampleService',
-                        properties=[
-                            Property(
-                                id='ExampleService_id',
-                                name='id',
-                                type='String'
-                            ),
-                            Property(
-                                id='ExampleService_name',
-                                name='name',
-                                type='String'
-                            )
-                        ],
-                        operations=[
-                            Operation(
-                                id='ExampleService_save',
-                                name='save',
-                                parameters=[
-                                    Parameter(
-                                        id='ExampleService_save_param1',
-                                        name='parameter',
-                                        type='String',
-                                        direction=ParameterDirection.IN
-                                    )
-                                ]
-                            )
-                        ]
-                    )
-                ],
-                dependencies=[],
-                data_types=[
-                    DataType(
-                        id='CustomType',
-                        name='CustomType'
-                    )
-                ]
-            ),
-            Package(
-                id='data_module',
-                name='Data',
-                classes=[
-                    Class(
-                        id='UserRepository',
-                        name='UserRepository',
-                        properties=[],
-                        operations=[
-                            Operation(
-                                id='UserRepository_findById',
-                                name='findById',
-                                parameters=[
-                                    Parameter(
-                                        id='UserRepository_findById_param1',
-                                        name='parameter',
-                                        type='String',
-                                        direction=ParameterDirection.IN
-                                    ),
-                                    Parameter(
-                                        id='UserRepository_findById_param2',
-                                        name='parameter',
-                                        type='ExampleService',
-                                        direction=ParameterDirection.RETURN
-                                    )
-                                ]
-                            )
-                        ]
-                    )
-                ],
-                dependencies=[
-                    Dependency(
-                        id='dependency_1',
-                        name='uses',
-                        client='UserRepository',
-                        supplier='ExampleService'
-                    ),
-                    Dependency(
-                        id='dependency_2',
-                        name='uses',
-                        client='ExampleService',
-                        supplier='CustomType'
-                    )
-                ],
-                data_types=[]
-            )
-        ]
-    )
 
     def test_parse(self):
-        assert XmiParser.parse(self.test_xmi_path) == self.expected
+        assert XmiParser.parse(self.test_xmi_path) == example_syntax
