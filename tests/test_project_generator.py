@@ -6,13 +6,13 @@ from tests.data.example_syntax import example_syntax
 
 
 class TestProjectGenerator:
-    expected_project_path = Path(__file__).parent / "data" / "Sample_Project"
+    expected_project_path = Path(__file__).parent / "data" / "output" / "Sample_Project"
 
     def test_generate_project(self):
         with TemporaryDirectory() as temp_dir:
-            temp_dir_path = Path(temp_dir)
-            ProjectGenerator.generate_project(example_syntax, temp_dir_path)
-            project_path = temp_dir_path / example_syntax.name
+            output_path = Path(temp_dir) / "output"
+            ProjectGenerator(example_syntax, output_path)
+            project_path = output_path / example_syntax.name
             assert self._are_dirs_identical(project_path, self.expected_project_path)
 
     def _are_dirs_identical(self, dir1: Path, dir2: Path) -> bool:

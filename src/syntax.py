@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from abc import ABC
 from dataclasses import dataclass
 from enum import Enum
@@ -49,6 +51,7 @@ class Dependency(AbstractSyntax):
 
 @dataclass
 class Package(AbstractSyntax):
+    subpackages: list[Package]
     classes: list[Class]
     dependencies: list[Dependency]
     data_types: list[DataType]

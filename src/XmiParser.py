@@ -52,6 +52,7 @@ class XmiParser:
     def _parse_package(cls, package_element: XmiElement) -> Package:
         return Package(
             *package_element.syganture,
+            cls._parse_all(package_element, "packagedElement", "uml:Package", cls._parse_package),
             cls._parse_all(package_element, "packagedElement", "uml:Class", cls._parse_class),
             cls._parse_all(package_element, "packagedElement", "uml:Dependency", cls._parse_dependency),
             cls._parse_all(package_element, "packagedElement", "uml:DataType", cls._parse_data_type),

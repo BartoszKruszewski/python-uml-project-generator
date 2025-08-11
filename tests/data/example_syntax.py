@@ -17,6 +17,29 @@ example_syntax = Project(
             Package(
                 id='core_module',
                 name='Core',
+                subpackages=[
+                    Package(
+                        id='test_subpackage',
+                        name='TestSubpackage',
+                        subpackages=[],
+                        classes=[
+                            Class(
+                                id='test_subclass',
+                                name='TestSubclass',
+                                properties=[
+                                    Property(
+                                        id='TestSubclass_test_value',
+                                        name='test_value',
+                                        type='Integer'
+                                    )
+                                ],
+                                operations=[]
+                            )
+                        ],
+                        dependencies=[],
+                        data_types=[]
+                    )
+                ],
                 classes=[
                     Class(
                         id='ExampleService',
@@ -60,6 +83,7 @@ example_syntax = Project(
             Package(
                 id='data_module',
                 name='Data',
+                subpackages=[],
                 classes=[
                     Class(
                         id='UserRepository',

@@ -10,6 +10,11 @@
           <ownedParameter xmi:type="uml:Parameter" xmi:id="ExampleService_save_param1" direction="in" type="String"/>
         </ownedOperation>
       </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="test_subpackage" name="TestSubpackage">
+        <packagedElement xmi:type="uml:Class" xmi:id="test_subclass" name="TestSubclass">
+          <ownedAttribute xmi:type="uml:Property" xmi:id="TestSubclass_test_value" name="test_value" type="Integer"/>
+        </packagedElement>
+      </packagedElement>
       <packagedElement xmi:type="uml:DataType" xmi:id="CustomType" name="CustomType"/>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="data_module" name="Data">

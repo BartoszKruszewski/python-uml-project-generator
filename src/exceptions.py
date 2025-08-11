@@ -12,3 +12,11 @@ class NoAttribute(XmiParserException):
 
 class NoElement(XmiParserException):
     pass
+
+
+class ImportMapperException(CustomException):
+    pass
+
+
+class NonMappedClass(ImportMapperException):
+    pass
