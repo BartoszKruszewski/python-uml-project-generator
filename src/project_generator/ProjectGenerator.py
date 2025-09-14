@@ -1,11 +1,11 @@
 from pathlib import Path
 
-from src.syntax import (
+from project_generator.syntax import (
     Class,
     Package,
     Project
 )
-from src.TemplateManager import TemplateManager
+from project_generator.TemplateManager import TemplateManager
 
 
 class ProjectGenerator:

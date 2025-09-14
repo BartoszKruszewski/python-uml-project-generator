@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from src.Config import Config
-from src.ImportMapping import ImportMapping
-from src.syntax import (
+from project_generator.Config import Config
+from project_generator.ImportMapping import ImportMapping
+from project_generator.syntax import (
     Class,
     Operation,
     ParameterDirection,

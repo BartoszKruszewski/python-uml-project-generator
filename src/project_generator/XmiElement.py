@@ -6,8 +6,8 @@ from typing import (
 )
 from xml.etree import ElementTree as ET
 
-from src.Config import Config
-from src.exceptions import (
+from project_generator.Config import Config
+from project_generator.exceptions import (
     NoAttribute,
     NoElement
 )

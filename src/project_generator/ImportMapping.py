@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from src.exceptions import NonMappedClass
-from src.syntax import (
+from project_generator.exceptions import NonMappedClass
+from project_generator.syntax import (
     Package,
     Project
 )

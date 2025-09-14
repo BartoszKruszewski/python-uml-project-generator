@@ -5,7 +5,7 @@ from typing import (
 )
 from xml.etree import ElementTree as ET
 
-from src.syntax import (
+from project_generator.syntax import (
     AbstractSyntax,
     Class,
     DataType,
@@ -17,7 +17,7 @@ from src.syntax import (
     Project,
     Property
 )
-from src.XmiElement import XmiElement
+from project_generator.XmiElement import XmiElement
 
 
 class XmiParser:

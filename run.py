@@ -2,7 +2,7 @@ import argparse
 import logging
 from pathlib import Path
 
-from src.Main import Main
+from uml_tool.Main import Main
 
 
 def validate_xmi_path(input: str) -> Path:

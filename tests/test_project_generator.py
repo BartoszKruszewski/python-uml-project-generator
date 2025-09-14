@@ -1,7 +1,7 @@
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from src.ProjectGenerator import ProjectGenerator
+from project_generator.ProjectGenerator import ProjectGenerator
 from tests.data.example_syntax import example_syntax
 
 

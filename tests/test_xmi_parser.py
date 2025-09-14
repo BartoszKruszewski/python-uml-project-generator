@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from src.XmiParser import XmiParser
+from project_generator.XmiParser import XmiParser
 from tests.data.example_syntax import example_syntax
 
 

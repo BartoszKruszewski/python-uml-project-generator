@@ -1,4 +1,4 @@
-from src.syntax import (
+from project_generator.syntax import (
     Class,
     DataType,
     Dependency,

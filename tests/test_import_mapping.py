@@ -1,7 +1,7 @@
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from src.ImportMapping import ImportMapping
+from project_generator.ImportMapping import ImportMapping
 from tests.data.example_syntax import example_syntax
 
 

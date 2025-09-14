@@ -1,8 +1,8 @@
 from pathlib import Path
 from pprint import pprint
 
-from src.ProjectGenerator import ProjectGenerator
-from src.XmiParser import XmiParser
+from project_generator.ProjectGenerator import ProjectGenerator
+from project_generator.XmiParser import XmiParser
 
 
 class Main:
