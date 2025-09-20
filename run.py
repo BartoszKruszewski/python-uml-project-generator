@@ -2,7 +2,7 @@ import argparse
 import logging
 from pathlib import Path
 
-from project_generator.Main import Main
+from project_generator.main import generate_project
 
 
 def validate_xmi_path(input: str) -> Path:
@@ -27,4 +27,4 @@ if __name__ == "__main__":
     parser.add_argument("xmi_path", type=validate_xmi_path, help="Path to XMI file")
     parser.add_argument('output_dir', type=validate_output_dir, help='Output dir')
     args = parser.parse_args()
-    Main(xmi_path=args.xmi_path, output_dir=args.output_dir)
+    generate_project(xmi_path=args.xmi_path, output_dir=args.output_dir)
