@@ -1,3 +1,0 @@
-- Wprowadzenie do UML i formatu XMI
-- Istniejące narzędzia i rozwiązania do generacji kodu z UML
-- Zakres i ograniczenia projektu

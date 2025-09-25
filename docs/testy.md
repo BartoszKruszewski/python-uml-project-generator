@@ -1,3 +1,0 @@
-- Testy jednostkowe i integracyjne
-- Przykładowe przypadki użycia
-- Wyniki testów i obserwacje

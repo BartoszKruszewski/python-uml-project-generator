@@ -1,3 +1,0 @@
-- Instrukcja instalacji i uruchomienia
-- Przewodnik po funkcjonalnościach aplikacji
-- Przykłady typowych scenariuszy użycia

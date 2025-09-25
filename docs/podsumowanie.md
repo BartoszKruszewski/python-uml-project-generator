@@ -1,3 +1,0 @@
-- Ocena osiągniętych celów
-- Ograniczenia projektu
-- Możliwe kierunki rozwoju
