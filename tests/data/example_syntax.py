@@ -63,7 +63,7 @@ example_syntax = Project(
                                 parameters=[
                                     Parameter(
                                         id='ExampleService_save_param1',
-                                        name='parameter',
+                                        name='ExampleService_save_param1',
                                         type='String',
                                         direction=ParameterDirection.IN
                                     )
@@ -96,13 +96,13 @@ example_syntax = Project(
                                 parameters=[
                                     Parameter(
                                         id='UserRepository_findById_param1',
-                                        name='parameter',
+                                        name='UserRepository_findById_param1',
                                         type='String',
                                         direction=ParameterDirection.IN
                                     ),
                                     Parameter(
                                         id='UserRepository_findById_param2',
-                                        name='parameter',
+                                        name='',
                                         type='ExampleService',
                                         direction=ParameterDirection.RETURN
                                     )

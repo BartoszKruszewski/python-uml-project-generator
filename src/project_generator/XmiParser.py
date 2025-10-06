@@ -91,9 +91,10 @@ class XmiParser:
 
     @classmethod
     def _parse_parameter(cls, parameter_element: XmiElement) -> Parameter:
+        direction = ParameterDirection(parameter_element.get("direction"))
         return Parameter(
             parameter_element.get("id"),
-            "parameter",
+            "" if direction == ParameterDirection.RETURN else parameter_element.get("name"),
             parameter_element.get("type"),
-            ParameterDirection(parameter_element.get("direction"))
+            direction
         )

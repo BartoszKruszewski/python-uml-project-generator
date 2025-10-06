@@ -3,5 +3,5 @@ class ExampleService:
         self._id = id
         self._name = name
 
-    def save(self, parameter: str) -> None:
+    def save(self, ExampleService_save_param1: str) -> None:
         pass
