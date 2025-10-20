@@ -29,7 +29,7 @@ class ImportMapping:
             Import path of the class.
         """
         if class_name not in self._mapping:
-            raise NonMappedClass()
+            raise NonMappedClass(f"Class {class_name} is not mapped to any import path.")
         return self._mapping[class_name]
 
     def _map_package(self, parent_path: str, package: Package):

@@ -1,22 +1,22 @@
 class CustomException(Exception):
-    pass
+    """"Base class for custom exceptions in the project generator domain."""
 
 
 class XmiParserException(CustomException):
-    pass
+    """Base class for XMI parser related exceptions."""
 
 
 class NoAttribute(XmiParserException):
-    pass
+    """Exception raised when an expected attribute is missing in an XMI element."""
 
 
 class NoElement(XmiParserException):
-    pass
+    """Exception raised when an expected child element is missing in an XMI element."""
 
 
 class ImportMapperException(CustomException):
-    pass
+    """Base class for import mapping related exceptions."""
 
 
 class NonMappedClass(ImportMapperException):
-    pass
+    """Exception raised when a class name is not mapped to any import path."""

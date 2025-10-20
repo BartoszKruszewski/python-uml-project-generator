@@ -46,7 +46,7 @@ class XmiElement:
         for namespace in ([""] if not force_namespace else []) + self.namespaces:
             if (attribute := self._element.get(f"{namespace}{key}")) is not None:
                 return attribute
-        raise NoAttribute()
+        raise NoAttribute(f"Attribute {key} not found in element {self._element.tag}.")
 
     @overload
     def find(self, name: str, all: Literal[False] = False, force_namespace: bool = False) -> XmiElement: ...
@@ -68,4 +68,4 @@ class XmiElement:
         for namespace in ([""] if not force_namespace else []) + self.namespaces:
             if (result := find_func(f"{namespace}{name}")) is not None:
                 return list(map(XmiElement, result)) if all else XmiElement(result)  # type: ignore
-        raise NoElement()
+        raise NoElement(f"Element {name} not found in element {self._element.tag}.")
