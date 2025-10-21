@@ -12,6 +12,7 @@ def generate_project(xmi_path: Path, output_dir: Path) -> None:
         xmi_path: Path to the XMI file.
         output_dir: Path to the output directory where the project will be generated.
     """
+    print(xmi_path.read_text())
     parsed_project = XmiParser.parse(xmi_path)
     pprint(parsed_project)
     ProjectGenerator(parsed_project, output_dir)

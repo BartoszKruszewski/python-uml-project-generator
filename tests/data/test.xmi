@@ -24,9 +24,9 @@
           <ownedParameter xmi:type="uml:Parameter" xmi:id="UserRepository_findById_param2" direction="return" type="ExampleService"/>
         </ownedOperation>
       </packagedElement>
-      <packagedElement xmi:type="uml:Dependency" xmi:id="dependency_1" name="uses"
+      <packagedElement xmi:type="uml:Association" xmi:id="relation_1" name="uses"
                        client="UserRepository" supplier="ExampleService"/>
-      <packagedElement xmi:type="uml:Dependency" xmi:id="dependency_2" name="uses"
+      <packagedElement xmi:type="uml:Composition" xmi:id="relation_2" name="consists_of"
                        client="ExampleService" supplier="CustomType"/>
     </packagedElement>
   </uml:Model>

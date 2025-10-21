@@ -1,13 +1,14 @@
 from project_generator.syntax import (
     Class,
     DataType,
-    Dependency,
     Operation,
     Package,
     Parameter,
     ParameterDirection,
     Project,
-    Property
+    Property,
+    Relation,
+    RelationType
 )
 
 example_syntax = Project(
@@ -112,15 +113,17 @@ example_syntax = Project(
                     )
                 ],
                 dependencies=[
-                    Dependency(
-                        id='dependency_1',
+                    Relation(
+                        id='relation_1',
+                        type=RelationType.ASSOCIATION,
                         name='uses',
                         client='UserRepository',
                         supplier='ExampleService'
                     ),
-                    Dependency(
-                        id='dependency_2',
-                        name='uses',
+                    Relation(
+                        id='relation_2',
+                        type=RelationType.COMPOSITION,
+                        name='consists_of',
                         client='ExampleService',
                         supplier='CustomType'
                     )

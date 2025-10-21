@@ -1,3 +1,4 @@
+from functools import partial
 from pathlib import Path
 from typing import (
     Callable,
@@ -9,13 +10,14 @@ from project_generator.syntax import (
     AbstractSyntax,
     Class,
     DataType,
-    Dependency,
     Operation,
     Package,
     Parameter,
     ParameterDirection,
     Project,
-    Property
+    Property,
+    Relation,
+    RelationType
 )
 from project_generator.XmiElement import XmiElement
 
@@ -80,23 +82,39 @@ class XmiParser:
             *package_element.syganture,
             cls._parse_all(package_element, "packagedElement", "uml:Package", cls._parse_package),
             cls._parse_all(package_element, "packagedElement", "uml:Class", cls._parse_class),
-            cls._parse_all(package_element, "packagedElement", "uml:Dependency", cls._parse_dependency),
+            sum([
+                cls._parse_all(
+                    package_element,
+                    "packagedElement",
+                    f"uml:{realtion.capitalize()}",
+                    partial(cls._parse_relation, realtion)
+                )
+                for realtion in [
+                    "association",
+                    "dependency",
+                    "aggregation",
+                    "composition",
+                    "realization",
+                    "generalization"
+                ]
+            ], []),
             cls._parse_all(package_element, "packagedElement", "uml:DataType", cls._parse_data_type),
         )
 
     @classmethod
-    def _parse_dependency(cls, dependency_element: XmiElement) -> Dependency:
-        """Parses a dependency element into a dependency syntax object.
+    def _parse_relation(cls, name: str, relation_element: XmiElement) -> Relation:
+        """Parses a relation element into a relation syntax object.
 
         Args:
-            dependency_element: XMI element representing the dependency.
+            relation_element: XMI element representing the relation.
         Returns:
-            Dependency syntax object.
+            Relation syntax object.
         """
-        return Dependency(
-            *dependency_element.syganture,
-            dependency_element.get("client"),
-            dependency_element.get("supplier")
+        return Relation(
+            *relation_element.syganture,
+            RelationType(name),
+            relation_element.get("client"),
+            relation_element.get("supplier")
         )
 
     @classmethod

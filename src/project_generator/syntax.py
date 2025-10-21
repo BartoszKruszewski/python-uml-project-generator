@@ -12,6 +12,17 @@ class ParameterDirection(Enum):
     RETURN = "return"
 
 
+class RelationType(Enum):
+    """Enum representing the type of a relation."""
+
+    ASSOCIATION = "association"
+    AGGREGATION = "aggregation"
+    COMPOSITION = "composition"
+    DEPENDENCY = "dependency"
+    REALIZATION = "realization"
+    GENERALIZATION = "generalization"
+
+
 @dataclass
 class AbstractSyntax(ABC):
     """Abstract base class for all syntax elements."""
@@ -51,8 +62,9 @@ class Class(AbstractSyntax):
 
 
 @dataclass
-class Dependency(AbstractSyntax):
-    """Dependency syntax element."""
+class Relation(AbstractSyntax):
+    """Relation syntax element."""
+    type: RelationType
     client: str
     supplier: str
 
@@ -62,7 +74,7 @@ class Package(AbstractSyntax):
     """Package syntax element."""
     subpackages: list[Package]
     classes: list[Class]
-    dependencies: list[Dependency]
+    dependencies: list[Relation]
     data_types: list[DataType]
 
 
