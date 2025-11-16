@@ -86,10 +86,10 @@ class XmiParser:
                 cls._parse_all(
                     package_element,
                     "packagedElement",
-                    f"uml:{realtion.capitalize()}",
-                    partial(cls._parse_relation, realtion)
+                    f"uml:{relation.capitalize()}",
+                    partial(cls._parse_relation, relation)
                 )
-                for realtion in [
+                for relation in [
                     "association",
                     "dependency",
                     "aggregation",
