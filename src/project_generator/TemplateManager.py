@@ -98,6 +98,7 @@ def {method_name}(self, {args}) -> {return_type}:
         """
         used_classes: set[str] = set(self._get_used_classes(class_syntax))
 
+        # Process all relations - add imports for all types used in relations
         for relation in relations_for_class:
             if relation.type in (
                 RelationType.ASSOCIATION,
@@ -107,14 +108,14 @@ def {method_name}(self, {args}) -> {return_type}:
                 type_name = self._relation_type_for_imports(relation)
                 if type_name not in Config.standard_data_types:
                     used_classes.add(type_name)
-
-        for relation in relations_for_class:
-            if relation.type in (
+            elif relation.type in (
                 RelationType.GENERALIZATION,
                 RelationType.REALIZATION,
             ):
                 if relation.supplier not in Config.standard_data_types:
                     used_classes.add(relation.supplier)
+            # Note: DEPENDENCY relations don't require imports in constructor,
+            # but if the type is used elsewhere, it will be caught by _get_used_classes
 
         return "\n".join(
             f"from {self._import_mapping.get_import_path(used_class)} import {used_class}"
@@ -167,18 +168,28 @@ def {method_name}(self, {args}) -> {return_type}:
         """
         parameter_parts: list[str] = []
         body_lines: list[str] = []
+        used_param_names: set[str] = set()
 
         for prop in class_syntax.properties:
             parameter_parts.append(
                 f"{prop.name}: {self._get_type_string(prop.type)}"
             )
             body_lines.append(f"self._{prop.name} = {prop.name}")
+            used_param_names.add(prop.name)
 
+        # Process all relations, ensuring unique parameter names
         for relation in relations_for_class:
             supplier = relation.supplier or "Ref"
-            param_name = supplier[0].lower(
-            ) + supplier[1:] if supplier else "ref"
+            base_param_name = supplier[0].lower() + supplier[1:] if supplier else "ref"
             type_name = self._get_type_string(supplier)
+
+            # Generate unique parameter name
+            param_name = base_param_name
+            counter = 1
+            while param_name in used_param_names:
+                param_name = f"{base_param_name}{counter}"
+                counter += 1
+            used_param_names.add(param_name)
 
             if relation.type == RelationType.ASSOCIATION:
                 param = f"{param_name}: {type_name} | None = None"
@@ -187,6 +198,14 @@ def {method_name}(self, {args}) -> {return_type}:
 
             elif relation.type == RelationType.AGGREGATION:
                 list_name = param_name + "s"
+                # Ensure list name is also unique
+                original_list_name = list_name
+                counter = 1
+                while list_name in used_param_names:
+                    list_name = f"{original_list_name}{counter}"
+                    counter += 1
+                used_param_names.add(list_name)
+                
                 param = f"{list_name}: list[{type_name}] | None = None"
                 parameter_parts.append(param)
                 body_lines.append(
@@ -195,6 +214,14 @@ def {method_name}(self, {args}) -> {return_type}:
 
             elif relation.type == RelationType.COMPOSITION:
                 field_name = param_name
+                # Ensure field name is unique for composition
+                original_field_name = field_name
+                counter = 1
+                while field_name in used_param_names:
+                    field_name = f"{original_field_name}{counter}"
+                    counter += 1
+                used_param_names.add(field_name)
+                
                 body_lines.append(
                     f"self._{field_name} = {type_name}()"
                 )
