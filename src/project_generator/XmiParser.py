@@ -17,7 +17,8 @@ from project_generator.syntax import (
     Project,
     Property,
     Relation,
-    RelationType
+    RelationType,
+    Visibility
 )
 from project_generator.XmiElement import XmiElement
 
@@ -152,7 +153,22 @@ class XmiParser:
         Returns:
             Property syntax object.
         """
-        return Property(*property_element.syganture, property_element.get("type"))
+        # Get type attribute directly from XML element (without namespace)
+        # to avoid confusion with xmi:type meta-attribute which has value "uml:Property"
+        prop_type = ""
+        element = property_element._element
+        # Check for 'type' attribute without namespace (direct attribute access)
+        if (type_attr := element.get("type")) is not None:
+            prop_type = type_attr.strip()
+            # Filter out meta-types - if type equals "uml:Property", it's a meta-type, not actual type
+            if prop_type == "uml:Property" or prop_type.startswith("uml:"):
+                prop_type = ""
+
+        return Property(
+            *property_element.syganture,
+            prop_type,
+            Visibility(property_element.get("visibility"))
+        )
 
     @classmethod
     def _parse_operation(cls, operation_element: XmiElement) -> Operation:
@@ -165,7 +181,8 @@ class XmiParser:
         """
         return Operation(
             *operation_element.syganture,
-            cls._parse_all(operation_element, "ownedParameter", "uml:Parameter", cls._parse_parameter)
+            cls._parse_all(operation_element, "ownedParameter", "uml:Parameter", cls._parse_parameter),
+            Visibility(operation_element.get("visibility"))
         )
 
     @classmethod

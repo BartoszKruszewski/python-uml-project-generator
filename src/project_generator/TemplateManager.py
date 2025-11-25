@@ -8,7 +8,8 @@ from project_generator.syntax import (
     ParameterDirection,
     Project,
     Relation,
-    RelationType
+    RelationType,
+    Visibility
 )
 
 
@@ -23,7 +24,7 @@ class TemplateManager:
     constructor_body_header: str = "def __init__({args}):"
 
     method_body: str = """
-def {method_name}(self, {args}) -> {return_type}:
+def {method_name}({args}) -> {return_type}:
     pass
 """
 
@@ -150,7 +151,9 @@ def {method_name}(self, {args}) -> {return_type}:
                     for parameter in operation.parameters
                 ]
             )
-            if typed_syntax.type not in Config.standard_data_types
+            if typed_syntax.type
+            and typed_syntax.type not in Config.standard_data_types
+            and not typed_syntax.type.startswith("uml:")  # Filter out meta-types
         ]
 
     def _generate_constructor(self, class_syntax: Class, relations_for_class: list[Relation]) -> str:
@@ -171,11 +174,22 @@ def {method_name}(self, {args}) -> {return_type}:
         used_param_names: set[str] = set()
 
         for prop in class_syntax.properties:
+            # Use property name directly (no underscore prefix in parameter)
+            prop_name = prop.name
+            # Default type to "Integer" if empty
+            prop_type = prop.type if prop.type else "Integer"
             parameter_parts.append(
-                f"{prop.name}: {self._get_type_string(prop.type)}"
+                f"{prop_name}: {self._get_type_string(prop_type)}"
             )
-            body_lines.append(f"self._{prop.name} = {prop.name}")
-            used_param_names.add(prop.name)
+            # Generate assignment based on visibility
+            if prop.visibility == Visibility.PRIVATE:
+                # Private: self._priv = priv
+                field_name = self._get_python_name(prop.name, prop.visibility)
+                body_lines.append(f"self.{field_name} = {prop_name}")
+            else:
+                # Public: self.pub = pub
+                body_lines.append(f"self.{prop_name} = {prop_name}")
+            used_param_names.add(prop_name)
 
         # Process all relations, ensuring unique parameter names
         for relation in relations_for_class:
@@ -205,7 +219,7 @@ def {method_name}(self, {args}) -> {return_type}:
                     list_name = f"{original_list_name}{counter}"
                     counter += 1
                 used_param_names.add(list_name)
-                
+
                 param = f"{list_name}: list[{type_name}] | None = None"
                 parameter_parts.append(param)
                 body_lines.append(
@@ -221,7 +235,7 @@ def {method_name}(self, {args}) -> {return_type}:
                     field_name = f"{original_field_name}{counter}"
                     counter += 1
                 used_param_names.add(field_name)
-                
+
                 body_lines.append(
                     f"self._{field_name} = {type_name}()"
                 )
@@ -253,9 +267,9 @@ def {method_name}(self, {args}) -> {return_type}:
             return ""
         return "\n\n".join(
             self.method_body.strip().format(
-                method_name=operation.name,
-                args=", ".join(
-                    f"{parameter.name}: {self._get_type_string(parameter.type)}"
+                method_name=self._get_python_name(operation.name, operation.visibility),
+                args=self._format_method_args(
+                    parameter
                     for parameter in operation.parameters
                     if parameter.direction == ParameterDirection.IN
                 ),
@@ -274,6 +288,23 @@ def {method_name}(self, {args}) -> {return_type}:
             for operation in operations
         )
 
+    def _format_method_args(self, parameters) -> str:
+        """Formats method arguments string.
+
+        Args:
+            parameters: Iterable of Parameter objects.
+        Returns:
+            Formatted arguments string (e.g., "self, arg1: int" or just "self").
+        """
+        param_list = list(parameters)
+        if not param_list:
+            return "self"
+        param_strs = [
+            f"{parameter.name}: {self._get_type_string(parameter.type)}"
+            for parameter in param_list
+        ]
+        return "self, " + ", ".join(param_strs)
+
     @staticmethod
     def _indent_block(block: str, indent: int) -> str:
         """Indents each line of the given block by the specified number of spaces.
@@ -290,6 +321,21 @@ def {method_name}(self, {args}) -> {return_type}:
             (" " * indent + line) if line != "" else line
             for line in block.split("\n")
         )
+
+    @staticmethod
+    def _get_python_name(name: str, visibility: Visibility) -> str:
+        """Gets the Python name with underscore prefix for private members.
+
+        Args:
+            name: Original name.
+            visibility: Visibility of the property or operation.
+        Returns:
+            Name with underscore prefix if private, otherwise original name.
+        """
+        if visibility == Visibility.PRIVATE:
+            # Add underscore prefix if not already present
+            return name if name.startswith("_") else f"_{name}"
+        return name
 
     @staticmethod
     def _get_type_string(data_type_name: str) -> str:

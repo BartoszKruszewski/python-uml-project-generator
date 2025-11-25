@@ -23,6 +23,15 @@ class RelationType(Enum):
     GENERALIZATION = "generalization"
 
 
+class Visibility(Enum):
+    """Enum representing visibility of properties and operations."""
+
+    PUBLIC = "public"
+    PRIVATE = "private"
+    PROTECTED = "protected"
+    PACKAGE = "package"
+
+
 @dataclass
 class AbstractSyntax(ABC):
     """Abstract base class for all syntax elements."""
@@ -39,6 +48,7 @@ class DataType(AbstractSyntax):
 class Property(AbstractSyntax):
     """Property syntax element."""
     type: str
+    visibility: Visibility
 
 
 @dataclass
@@ -52,6 +62,7 @@ class Parameter(AbstractSyntax):
 class Operation(AbstractSyntax):
     """Operation syntax element."""
     parameters: list[Parameter]
+    visibility: Visibility
 
 
 @dataclass

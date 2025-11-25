@@ -8,7 +8,8 @@ from project_generator.syntax import (
     Project,
     Property,
     Relation,
-    RelationType
+    RelationType,
+    Visibility
 )
 
 example_syntax = Project(
@@ -31,7 +32,8 @@ example_syntax = Project(
                                     Property(
                                         id='TestSubclass_test_value',
                                         name='test_value',
-                                        type='Integer'
+                                        type='Integer',
+                                        visibility=Visibility.PUBLIC
                                     )
                                 ],
                                 operations=[]
@@ -49,12 +51,14 @@ example_syntax = Project(
                             Property(
                                 id='ExampleService_id',
                                 name='id',
-                                type='String'
+                                type='String',
+                                visibility=Visibility.PUBLIC
                             ),
                             Property(
                                 id='ExampleService_name',
                                 name='name',
-                                type='String'
+                                type='String',
+                                visibility=Visibility.PUBLIC
                             )
                         ],
                         operations=[
@@ -68,7 +72,8 @@ example_syntax = Project(
                                         type='String',
                                         direction=ParameterDirection.IN
                                     )
-                                ]
+                                ],
+                                visibility=Visibility.PUBLIC
                             )
                         ]
                     )
@@ -107,7 +112,8 @@ example_syntax = Project(
                                         type='ExampleService',
                                         direction=ParameterDirection.RETURN
                                     )
-                                ]
+                                ],
+                                visibility=Visibility.PUBLIC
                             )
                         ]
                     )
