@@ -118,10 +118,14 @@ def {method_name}({args}) -> {return_type}:
             # Note: DEPENDENCY relations don't require imports in constructor,
             # but if the type is used elsewhere, it will be caught by _get_used_classes
 
-        return "\n".join(
-            f"from {self._import_mapping.get_import_path(used_class)} import {used_class}"
-            for used_class in sorted(used_classes)
-        )
+        import_lines = []
+        for used_class in sorted(used_classes):
+            try:
+                import_path = self._import_mapping.get_import_path(used_class)
+                import_lines.append(f"from {import_path} import {used_class}")
+            except Exception:
+                pass
+        return "\n".join(import_lines)
 
     def _relation_type_for_imports(self, relation: Relation) -> str:
         """Type name used for import resolution (always supplier).
